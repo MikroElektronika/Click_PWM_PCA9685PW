@@ -1,9 +1,6 @@
-![MikroE](http://www.mikroe.com/img/designs/beta/logo_small.png)
 #PWM click#
 ##By [MikroElektronika](http://www.mikroe.com)
 ![PWM_click](http://www.mikroe.com/img/news/2015/03/pwm_click_banner_news.png)
-#PWM click#
-##By [MikroElektronika](http://www.mikroe.com)
 ### Installation
 If installing from package, [Package manager](http://www.mikroe.com/package-manager/) required to install to your IDE.
 
