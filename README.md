@@ -1,11 +1,11 @@
-> ![MikroE](http://www.mikroe.com/img/designs/beta/logo_small.png)
-> #PWM click#
-> ##By [MikroElektronika](http://www.mikroe.com)
-> ![PWM_click](http://www.mikroe.com/img/news/2015/03/pwm_click_banner_news.png)
-> #PWM click#
-> ##By [MikroElektronika](http://www.mikroe.com)
-> ### Installation
-> If installing from package, [Package manager](http://www.mikroe.com/package-manager/) required to install to your IDE.
+![MikroE](http://www.mikroe.com/img/designs/beta/logo_small.png)
+#PWM click#
+##By [MikroElektronika](http://www.mikroe.com)
+![PWM_click](http://www.mikroe.com/img/news/2015/03/pwm_click_banner_news.png)
+#PWM click#
+##By [MikroElektronika](http://www.mikroe.com)
+### Installation
+If installing from package, [Package manager](http://www.mikroe.com/package-manager/) required to install to your IDE.
 
 PWM click is a simple solution for controlling 16 PWM outputs through a single I2C interface. 
 You can use it to control anything from a simple LED strip to a complex robot with a multitude of moving parts. 
