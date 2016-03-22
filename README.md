@@ -16,6 +16,8 @@ PWM click is designed to use either a 3.3V or 5V power supply.
 
 ### Example
 ```
+#include "pwm_hw.h"
+
 sbit PWM_EN_PIN at GPIOC_ODR.B2;
 
 void system_init()
