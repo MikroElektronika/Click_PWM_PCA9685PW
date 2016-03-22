@@ -15,7 +15,7 @@ This will allow you to get a total of 112 pwm outputs on a single I2C line.
 PWM click is designed to use either a 3.3V or 5V power supply.
 
 ### Example
-'''
+```
 sbit PWM_EN_PIN at GPIOC_ODR.B2;
 
 void system_init()
@@ -35,4 +35,4 @@ void main()
     pwm_set_all( 33 );
     pwm_channel_state( 3, false );
 }
-'''
+```
