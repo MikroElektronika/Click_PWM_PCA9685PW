@@ -11,6 +11,7 @@ The click board™ carries the PCA9685PW IC. The board has an additional set of 
 up to seven PWM clicks together (using three jumpers to specify a different I2C address for each one). 
 This will allow you to get a total of 112 pwm outputs on a single I2C line. 
 PWM click is designed to use either a 3.3V or 5V power supply.
+
 ---
 
 ### Example
