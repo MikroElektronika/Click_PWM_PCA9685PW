@@ -1,6 +1,8 @@
-#PWM click#
-##By [MikroElektronika](http://www.mikroe.com)
+![MikroE](http://www.mikroe.com/img/designs/beta/logo_small.png)
+
 ![PWM_click](http://www.mikroe.com/img/news/2015/03/pwm_click_banner_news.png)
+
+---
 
 ### Description
 PWM click is a simple solution for controlling 16 PWM outputs through a single I2C interface. 
@@ -9,11 +11,17 @@ The click board™ carries the PCA9685PW IC. The board has an additional set of 
 up to seven PWM clicks together (using three jumpers to specify a different I2C address for each one). 
 This will allow you to get a total of 112 pwm outputs on a single I2C line. 
 PWM click is designed to use either a 3.3V or 5V power supply.
-
-### Installation
-If installing from package, [Package manager](http://www.mikroe.com/package-manager/) required to install to your IDE.
+---
 
 ### Example
+
+#### Configuration
+* MCU:             STM32F107VC
+* Dev.Board:       EasyMx Pro v7
+* Oscillator:      72 Mhz internal
+* Ext. Modules:    SHT Click
+* SW:              MikroC PRO for ARM 4.7.0
+
 ```
 #include "pwm_hw.h"
 
