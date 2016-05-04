@@ -26,7 +26,7 @@ PWM click is designed to use either a 3.3V or 5V power supply.
 * MCU:             STM32F107VC
 * Dev.Board:       EasyMx Pro v7
 * Oscillator:      72 Mhz internal
-* Ext. Modules:    SHT Click
+* Ext. Modules:    PWM Click
 * SW:              MikroC PRO for ARM 4.7.0
 
 ```
