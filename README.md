@@ -4,6 +4,12 @@
 
 ---
 
+[Product Page](http://www.mikroe.com/click/pwm/)
+
+[Learn Page](http://learn.mikroe.com/pwm-digital-signal-analog-soul/)
+
+---
+
 ### Description
 PWM click is a simple solution for controlling 16 PWM outputs through a single I2C interface. 
 You can use it to control anything from a simple LED strip to a complex robot with a multitude of moving parts. 
