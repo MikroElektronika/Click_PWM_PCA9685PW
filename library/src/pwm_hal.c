@@ -229,6 +229,8 @@ void pwm_hal_init( uint8_t address_id )
 #else
     _i2c_hw_address             = ( address_id << 1 );
 #endif
+
+    pwm_hal_enable();
 }
 
 void pwm_hal_enable()
