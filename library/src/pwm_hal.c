@@ -22,12 +22,8 @@
 /******************************************************************************
 * Module Preprocessor Constants
 *******************************************************************************/
-#define CMD_SIZE                1
-#define BUFF_SIZE               256
 #define READ_BIT                1
 #define WRITE_BIT               0
-#define NACK_BIT                1
-#define ACK_BIT                 0
 /******************************************************************************
 * Module Preprocessor Macros
 *******************************************************************************/
@@ -39,13 +35,20 @@
 /******************************************************************************
 * Module Variable Definitions
 *******************************************************************************/
-static uint8_t      _i2c_hw_address;
+static uint8_t _i2c_hw_address;
+
+#if defined( __MIKROC_PRO_FOR_PIC32__ ) || \
+    defined( __MIKROC_PRO_FOR_DSPIC__ )
+static uint8_t NACK_BIT   = 0x01;
+static uint8_t ACK_BIT    = 0x00;
+#elif defined( __MIKROC_PRO_FOR_PIC__ ) || \
+      defined( __MIKROC_PRO_FOR_AVR__ )
+static uint8_t NACK_BIT   = 0x00;
+static uint8_t ACK_BIT    = 0x01;
+#endif
 
 #if defined( __MIKROC_PRO_FOR_ARM__ )
-    #if defined( STM32F030C6 )      || \
-        defined( STM32F107VC )      || \
-        defined( STM32F407VG )      || \
-        defined( STM32F746VG )
+    #if defined( STM32 )
 static unsigned int ( *start_i2c_p )            ( void );
 static unsigned int ( *write_i2c_p )            ( unsigned char slave_address,
                                                   unsigned char *buffer,
@@ -55,8 +58,8 @@ static void         ( *read_i2c_p )             ( unsigned char slave_address,
                                                   unsigned char *buffer,
                                                   unsigned long count,
                                                   unsigned long end_mode );
-    #elif defined( LM3S1165 )       || \
-          defined( TM4C129ENCZAD )
+
+    #elif defined( LM ) || defined( TM )
 static void         ( *enable_i2c_p )           ( void );
 static void         ( *disable_i2c_p )          ( void );
 static void         ( *set_slave_address_i2c_p )( unsigned char slave_address,
@@ -123,13 +126,13 @@ static unsigned char( *read_10bit_i2c_p )       ( unsigned char *data_in,
                                                   unsigned int address_10bit );
 #endif
 
-#if defined(__MIKROC_PRO_FOR_ARM__)   || \
-    defined(__MIKROC_PRO_FOR_FT90x__) || \
-    defined(__MIKROC_PRO_FOR_AVR__)   || \
-    defined(__MIKROC_PRO_FOR_8051__)  || \
-    defined(__MIKROC_PRO_FOR_DSPIC__) || \
-    defined(__MIKROC_PRO_FOR_PIC32__) || \
-    defined(__MIKROC_PRO_FOR_PIC__)
+#if defined( __MIKROC_PRO_FOR_ARM__ )   || \
+    defined( __MIKROC_PRO_FOR_AVR__ )   || \
+    defined( __MIKROC_PRO_FOR_PIC__ )   || \
+    defined( __MIKROC_PRO_FOR_PIC32__ ) || \
+    defined( __MIKROC_PRO_FOR_DSPIC__ ) || \
+    defined( __MIKROC_PRO_FOR_8051__ )  || \
+    defined( __MIKROC_PRO_FOR_FT90x__ )
 extern sfr sbit PWM_EN_PIN;
 #endif
 /******************************************************************************
@@ -142,16 +145,12 @@ extern sfr sbit PWM_EN_PIN;
 void pwm_hal_init( uint8_t address_id )
 {
 #if defined( __MIKROC_PRO_FOR_ARM__ )
-    #if defined( STM32F030C6 )      || \
-        defined( STM32F107VC )      || \
-        defined( STM32F407VG )      || \
-        defined( STM32F746VG )
+    #if defined( STM32 )
     start_i2c_p                 = I2C_Start_Ptr;
     write_i2c_p                 = I2C_Write_Ptr;
     read_i2c_p                  = I2C_Read_Ptr;
 
-    #elif defined( LM3S1165 )       || \
-          defined( TM4C129ENCZAD )
+    #elif defined( LM ) || defined( TM )
     enable_i2c_p                = I2C_Enable_Ptr;
     disable_i2c_p               = I2C_Disable_Ptr;
     set_slave_address_i2c_p     = I2C_Master_Slave_Addr_Set_Ptr;
@@ -161,7 +160,7 @@ void pwm_hal_init( uint8_t address_id )
     #endif
 
 #elif defined( __MIKROC_PRO_FOR_AVR__ )
-    #if defined( ATMEGA32 )
+    #if defined( ATMEGA )
     busy_i2c_p                  = TWI_Busy;
     status_i2c_p                = TWI_Status;
     close_i2c_p                 = TWI_Close;
@@ -170,7 +169,7 @@ void pwm_hal_init( uint8_t address_id )
     write_i2c_p                 = TWI_Write;
     read_i2c_p                  = TWI_Read;
 
-    #elif defined( ATXMEGA32A4 )
+    #elif defined( ATXMEGA )
     busy_i2c_p                  = TWIC_Busy;
     status_i2c_p                = TWIC_Status;
     close_i2c_p                 = TWIC_Close;
@@ -230,8 +229,6 @@ void pwm_hal_init( uint8_t address_id )
 #else
     _i2c_hw_address             = ( address_id << 1 );
 #endif
-
-    pwm_hal_enable();
 }
 
 void pwm_hal_enable()
@@ -240,18 +237,16 @@ void pwm_hal_enable()
     Delay_ms( 100 );
 }
 
-
 void pwm_hal_write( uint8_t *command,
                     uint8_t *buffer,
                     uint8_t count )
 {
-    uint8_t temp[ BUFF_SIZE ];
-
-    uint8_t cmd_size    = CMD_SIZE;
-    uint16_t i          = 0;
-    uint8_t *temp_ptr   = temp;
-    uint8_t *buff_ptr   = buffer;
-    uint8_t *cmd_ptr    = command;
+    uint16_t    i                     = 0;
+    uint8_t     temp[ MAX_BUFF_SIZE ] = { 0 };
+    uint8_t     cmd_size              = COMMAND_SIZE;
+    uint8_t*    temp_ptr    = temp;
+    uint8_t*    buff_ptr    = buffer;
+    uint8_t*    cmd_ptr     = command;
 
     while( cmd_size-- )
         temp[ i++ ] = *( cmd_ptr++ );
@@ -260,14 +255,11 @@ void pwm_hal_write( uint8_t *command,
         temp[ i++ ] = *( buff_ptr++ );
 
 #if defined(__MIKROC_PRO_FOR_ARM__)
-    #if defined( STM32F030C6 )      || \
-        defined( STM32F107VC )      || \
-        defined( STM32F407VG )      || \
-        defined( STM32F746VG )
+    #if defined( STM32 )
     start_i2c_p();
     write_i2c_p( _i2c_hw_address, temp_ptr, i, END_MODE_STOP );
 
-    #elif defined( LM3S1165 ) || defined( TM4C129ENCZAD )
+    #elif defined( LM ) || defined( TM )
     set_slave_address_i2c_p( _i2c_hw_address, _I2C_DIR_MASTER_TRANSMIT );
 
     if( i == 2 )
@@ -284,7 +276,6 @@ void pwm_hal_write( uint8_t *command,
 
         write_i2c_p( *temp_ptr, _I2C_MASTER_MODE_BURST_SEND_FINISH );
     }
-
     #endif
 
 #elif defined(__MIKROC_PRO_FOR_FT90x__)
@@ -310,20 +301,17 @@ void pwm_hal_read( uint8_t *command,
                    uint8_t *buffer,
                    uint8_t count )
 {
-    uint8_t cmd_size    = CMD_SIZE;
-    uint8_t *cmd_ptr = command;
-    uint8_t *buff_ptr = buffer;
+    uint8_t*    cmd_ptr     = command;
+    uint8_t*    buff_ptr    = buffer;
+    uint8_t     cmd_size    = COMMAND_SIZE;
 
 #if defined(__MIKROC_PRO_FOR_ARM__)
-    #if defined( STM32F030C6 )      || \
-        defined( STM32F107VC )      || \
-        defined( STM32F407VG )      || \
-        defined( STM32F746VG )
+    #if defined( STM32 )
     start_i2c_p();
     write_i2c_p( _i2c_hw_address, cmd_ptr, cmd_size, END_MODE_RESTART );
     read_i2c_p( _i2c_hw_address, buff_ptr, count, END_MODE_STOP );
 
-    #elif defined( LM3S1165 ) || defined( TM4C129ENCZAD )
+    #elif defined( LM ) || defined( TM )
     set_slave_address_i2c_p( _i2c_hw_address, _I2C_DIR_MASTER_TRANSMIT );
     if ( cmd_size == 1 )
     {
@@ -361,10 +349,9 @@ void pwm_hal_read( uint8_t *command,
 
         read_i2c_p( buff_ptr, _I2C_MASTER_MODE_BURST_SEND_FINISH );
     }
-
     #endif
 
-#elif defined(__MIKROC_PRO_FOR_FT90x__)
+#elif defined( __MIKROC_PRO_FOR_FT90x__ )
     set_slave_address_i2c_p( _i2c_hw_address );
     write_bytes_i2c_p( cmd_ptr, cmd_size );
     read_bytes_i2c_p( buff_ptr, count );
@@ -394,5 +381,4 @@ void pwm_hal_read( uint8_t *command,
     stop_i2c_p();
 #endif
 }
-
 /*************** END OF FUNCTIONS *********************************************/
