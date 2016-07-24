@@ -19,6 +19,7 @@ const M2_OUTDRV                                           = 2
 const M2_OCH                                              = 3
 const M2_INVERT                                           = 4
 
+dim i2c_adr as char
 dim tmp_cmd as char
 dim tmp_data as char[ 4 ]
 
@@ -29,17 +30,15 @@ sub procedure pwm_device_config( char allcall, char sub3, char sub2, char sub1, 
 ' ...
 
 sud procedure pwm_init( char i2c_dev_addr )
-{
-    
+    i2c_addr = i2c_dev_addr
 
-    pwm_device_config( 1, 0, 0, 1, 1, 0 );
-    pwm_set_pre_scale( 4 );
-    pwm_device_config( 1, 0, 0, 0, 0, 1 );
-    pwm_output_config( 0, 1, 0, 0 );
-}
+    pwm_device_config( 1, 0, 0, 1, 1, 0 )
+    pwm_set_pre_scale( 4 )
+    pwm_device_config( 1, 0, 0, 0, 0, 1 )
+    pwm_output_config( 0, 1, 0, 0 )
+end sub
 
 sud procedure pwm_device_config( char allcall, char sub3, char sub2, char sub1, char sleep, char restart )
-{
     tmp_cmd = PWM_MODE1;
     tmp_data = 32;
 
@@ -59,8 +58,9 @@ sud procedure pwm_device_config( char allcall, char sub3, char sub2, char sub1, 
     */
 
     Delay_ms( 10 );
-}
+end sub
 
+' and so on
 
 
 void pwm_output_config( uint8_t state,
