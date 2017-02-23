@@ -1,16 +1,3 @@
-/****************************************************************************
-* Title                 :   PWM CLICK
-* Filename              :   pwm_hw.h
-* Author                :   MSV
-* Origin Date           :   28/01/2016
-* Notes                 :   None
-*****************************************************************************/
-/**************************CHANGE LIST **************************************
-*
-*    Date    Software Version    Initials   Description
-*  28/01/16    XXXXXXXXXXX         MSV      Interface Created.
-*
-*****************************************************************************/
 /**
  * @file pwm_hw.h
  * @brief <h3> Hardware Layer </h3>
@@ -170,104 +157,67 @@
 *******************************************************************************/
 #include <stdbool.h>
 #include "pwm_hal.h"
+
 /******************************************************************************
 * Preprocessor Constants
 *******************************************************************************/
 /**
  * PWM period time resolution */
 #define PWM_RESOLUTION                                  4096
+
 /**
- * Pre_scale register */
+ * @name PWM Click Registers
+ ******************************************************************************/
+///@{
+/** Pre_scale register */
 #define PWM_PRE_SCALE                                   0xFE
-/**
- * Mode 1 register */
+/** Mode 1 register */
 #define PWM_MODE1                                       0x00
-/**
- * Mode 2 register */
+/** Mode 2 register */
 #define PWM_MODE2                                       0x01
-/**
- * Channel configuration registers */
+/** Channel configuration registers */
 #define PWM_CHANNEL                                     0x06
-/**
- * All channels configuration registers */
+/** All channels configuration registers */
 #define PWM_ALL                                         0xFA
-/******************************************************************************
-* Configuration Constants
-*******************************************************************************/
-
-/******************************************************************************
-* Macros
-*******************************************************************************/
-
-/******************************************************************************
-* Typedefs
-*******************************************************************************/
-/**
- * @enum M1_t
- * @brief Mode register 1
- *
- * @par
- * Description of the mode register 1 bits.
- */
-typedef enum
-{
-    /**
-     * LED all-call */
-    M1_ALLCALL                                          = 0,
-    /**
-     * Sub-address 3 */
-    M1_SUB3                                             = 1,
-    /**
-     * Sub-address 2 */
-    M1_SUB2                                             = 2,
-    /**
-     * Sub-address 1 */
-    M1_SUB1                                             = 3,
-    /**
-     * Sleep mode */
-    M1_SLEEP                                            = 4,
-    /**
-     * Increment state */
-    M1_AI                                               = 5,
-    /**
-     * External clock */
-    M1_EXTCLK                                           = 6,
-    /**
-     * Restart logic */
-    M1_RESTART                                          = 7
-
-}M1_t;
+///@}
 
 /**
- * @enum M2_t
- * @brief Mode register 2
- *
- * @par
- * Description of the mode register 2 bits.
- */
-typedef enum
-{
-    /**
-     * Output drivers */
-    M2_OUTNE                                            = 0,
-    /**
-     * Outputs structure */
-    M2_OUTDRV                                           = 2,
-    /**
-     * Outputs change moment */
-    M2_OCH                                              = 3,
-    /**
-     * Output logic inversion */
-    M2_INVERT                                           = 4
-
-}M2_t;
-/******************************************************************************
-* Variables
-*******************************************************************************/
-
-/******************************************************************************
-* Function Prototypes
-*******************************************************************************/
+ * @name Mode register 1 bits
+ ******************************************************************************/
+///@{
+/** LED all-call */
+#define M1_ALLCALL                                          0
+/** Sub-address 3 */
+#define M1_SUB3                                             1
+/** Sub-address 2 */
+#define M1_SUB2                                             2
+/** Sub-address 1 */
+#define M1_SUB1                                             3
+/** Sleep mode */
+#define M1_SLEEP                                            4
+/** Increment state */
+#define M1_AI                                               5
+/** External clock */
+#define M1_EXTCLK                                           6
+/** Restart logic */
+#define M1_RESTART                                          7
+///@}
+/**
+ * @name Mode register 2
+ ******************************************************************************/
+///@
+/** Output drivers */
+#define M2_OUTNE                                            0
+/** Outputs structure */
+#define M2_OUTDRV                                           2
+/** Outputs change moment */
+#define M2_OCH                                              3
+/** Output logic inversion */
+#define M2_INVERT                                           4
+///@}
+/**
+ * @name Functions
+ ******************************************************************************/
 #ifdef __cplusplus
 extern "C"{
 #endif
@@ -288,7 +238,9 @@ extern "C"{
  *
  * @endcode
  */
-void pwm_init( uint8_t i2c_dev_addr );
+void pwm_click_init( uint8_t i2c_address );
+
+void pwm_click_enable( bool state );
 
 /**
  * @brief <h4> Device Configuration </h4>
@@ -447,6 +399,6 @@ void pwm_all_state( bool state );
 #ifdef __cplusplus
 } // extern "C"
 #endif
-
 #endif /* PWM_HW_H */
+///@}
 /*** End of File **************************************************************/

@@ -1,124 +1,97 @@
-/****************************************************************************
-* Title                 :   PWM CLICK
-* Filename              :   pwm_hal.h
-* Author                :   MSV
-* Origin Date           :   28/01/2016
-* Notes                 :   None
-*****************************************************************************/
-/**************************CHANGE LIST **************************************
-*
-*    Date    Software Version    Initials   Description
-*  28/01/16    XXXXXXXXXXX         MSV      Interface Created.
-*
-*****************************************************************************/
 /**
- * @file pwm_hal.h
- * @brief <h3> HAL layer </h3>
+ * @file I2C_hal.h
+ * @brief 				HAL layer for I2C communication
  *
- * @par
- * HAL layer for <a href="http://www.mikroe.com">MikroElektronika's</a>
- * PWM click board.
- */
-#ifndef PWM_HAL_H
-#define PWM_HAL_H
-/******************************************************************************
-* Includes
-*******************************************************************************/
-#include "stdint.h"
-/******************************************************************************
-* Preprocessor Constants
-*******************************************************************************/
-/*
- * ARM MCUs */
-//#define STM32
-//#define LM
-//#define TM
+ ******************************************************************************/
 
-/*
- * AVR MCUs */
-//#define ATMEGA
-//#define ATXMEGA
-/******************************************************************************
-* Configuration Constants
-*******************************************************************************/
-/**
- * Register address size */
-#define COMMAND_SIZE            1
-/**
- * Maximum buffer size */
-#define MAX_BUFF_SIZE           256
-/******************************************************************************
-* Macros
-*******************************************************************************/
+#ifndef I2C_HAL_H_
+#define I2C_HAL_H_
 
-/******************************************************************************
-* Typedefs
-*******************************************************************************/
+#include <stdint.h>
 
-/******************************************************************************
-* Variables
-*******************************************************************************/
-
-/******************************************************************************
-* Function Prototypes
-*******************************************************************************/
+/* 			Functions
+ ******************************************************************************/
 #ifdef __cplusplus
 extern "C"{
 #endif
 
 /**
- * @brief <h4> HAL Initialization </h4>
+ * @brief HAL Delay
  *
- * @par
- * Initialization of HAL layer used to initialize I2C bus and pins needed
- * for proper usage of click board.
- *
- * @param[in] address_id - hardware address
+ * @param[in] 	ms              Amount of delay in miliseconds
  */
-void pwm_hal_init( uint8_t address_id );
-
+void hal_pwm_delay( uint16_t ms );
 
 /**
- * @brief <h4> PWM Enable </h4>
+ * @brief HAL Initialization
  *
- * @par
- * Enables the module using
- * @link PWM_EN_PIN @endlink .
+ * Initialization of HAL layer.
+ * Initializes function pointers and must be called first.
  */
-void pwm_hal_enable( void );
+int hal_pwm_init( void );
 
 /**
- * @brief <h4> HAL Write </h4>
+ * @brief HAL Write
  *
- * @par
- * Generic write function adapted for I2C bus.
+ * @param[in]   i2c_address	Device I2C slave address
+ * @param[in]   buffer 		Data for writting
+ * @param[in]   count 		Number of bytes to write
  *
- * @param[in] command - register address
- * @param[in] buffer - data buffer
- * @param[in] count - data size in bytes
+ * @retval	0 		no errors
+ * @retval	non_zero 	error occured
  */
-void pwm_hal_write( uint8_t *command,
-                    uint8_t *buffer,
-                    uint8_t count );
+int hal_pwm_write
+(
+        uint8_t i2c_address,
+        uint8_t *buffer,
+        uint16_t count
+);
 
 /**
- * @brief <h4> HAL Read </h4>
+ * @brief HAL Read
  *
- * @par
- * Generic read function adapted for I2C bus.
+ * @param[in]	i2c_address	Device I2C slave address
+ * @param[in/out] buffer 	Data buffer
+ * @param[in] 	count 		Number of bytes to read
  *
- * @param[in] command - register address
- * @param[out] buffer - data buffer
- * @param[in] count - data size in bytes
+ * @retval	0 		no errors
+ * @retval	non_zero 	error occured
+ *
+ * @note
+ * Data buffer caries command ( register address ) at first byte which will be
+ * rewritten after reading.
  */
-void pwm_hal_read( uint8_t *command,
-                   uint8_t *buffer,
-                   uint8_t count );
+int hal_pwm_read
+(
+        uint8_t i2c_address,
+        uint8_t *buffer,
+        uint16_t count
+);
+
+/**
+ * @brief HAL Transfer
+ *
+ * @param[in]  	i2c_address 	Device I2C slave address
+ * @param[in]  	*input		Data for writting
+ * @param[in]  	in_count	Number of bytes to write
+ * @param[out] 	*output		Buffer to store data from device
+ * @param[in]  	out_count	Number of bytes to read
+ *
+ * @retval	0 		no errors
+ * @retval	non_zero 	error occured
+ */
+int hal_pwm_transfer
+(
+        uint8_t i2c_address,
+        uint8_t* input,
+        uint16_t in_count,
+        uint8_t* output,
+        uint16_t out_count
+);
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
-
-#endif /* CLICKNAME_HAL_H_ */
-
-/*** End of File **************************************************************/
+#endif
+/*                                                          End of File
+ ******************************************************************************/

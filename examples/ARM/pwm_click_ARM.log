@@ -1,0 +1,19 @@
+0	1	mikroCARM.exe -MSF -DBG -pSTM32F107VC -UICD -BIN -LHF -DL -SSA -O11111114 -fo72 -N"E:\git\MikroE\Click_PWM_PCA9685PW\examples\ARM\pwm_click_ARM.mcpar" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for ARM\Defs\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for ARM\Uses\" -SP"E:\git\MikroE\Click_PWM_PCA9685PW\examples\ARM\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for ARM\Uses\ST M3\" -SP"E:\git\MikroE\Click_PWM_PCA9685PW\library\src\" -SP"E:\git\MikroE\Click_PWM_PCA9685PW\library\include\" -IP"E:\git\MikroE\Click_PWM_PCA9685PW\library\include\" "pwm_hal.c" "pwm_hw.c" "pwm_click_ARM.c" "__Lib_Math.emcl" "__Lib_MathDouble.emcl" "__Lib_Delays.emcl" "__Lib_System_105_107.emcl" "__Lib_GPIO_32F10x_Defs.emcl" "__Lib_GPIO_32F10x.emcl" "__Lib_I2C_12.emcl"	 
+diagnostics: 0	122	Compilation Started	stdint.h
+diagnostics: 398	123	Compiled Successfully	pwm_hal.c
+diagnostics: 0	122	Compilation Started	stdbool.h
+hint: 153	1163	Variable 'tmp_cmd' has been declared, but not used	pwm_hw.c
+diagnostics: 202	123	Compiled Successfully	pwm_hw.c
+hint: 118	1164	Variable 'raw_offset' has been eliminated by optimizer	pwm_hw.c
+hint: 119	1164	Variable 'raw_dc' has been eliminated by optimizer	pwm_hw.c
+hint: 144	1164	Variable 'raw_dc' has been eliminated by optimizer	pwm_hw.c
+diagnostics: 0	122	Compilation Started	stdbool.h
+diagnostics: 38	123	Compiled Successfully	pwm_click_ARM.c
+diagnostics: 0	127	All files Compiled in 250 ms	 
+hint: 0	1144	Used RX: 16 (100%)   Free RX: 0 (0%)	Used RX: 16 (100%)   Free RX: 0 (0%)
+hint: 0	1144	Static RAM (bytes): 29   Dynamic RAM (bytes): 65501	Static RAM (bytes): 29   Dynamic RAM (bytes): 65501
+hint: 0	1144	Used ROM (bytes): 5386 (2%)  Free ROM (bytes): 256758 (98%)	Used ROM (bytes): 5386 (2%)  Free ROM (bytes): 256758 (98%)
+diagnostics: 0	125	Project Linked Successfully	pwm_click_ARM.mcpar
+diagnostics: 0	128	Linked in 250 ms	 
+diagnostics: 0	129	Project 'pwm_click_ARM.mcpar' completed: 656 ms	 
+diagnostics: 0	103	Finished successfully: 23 Feb 2017, 12:59:53	pwm_click_ARM.mcpar
